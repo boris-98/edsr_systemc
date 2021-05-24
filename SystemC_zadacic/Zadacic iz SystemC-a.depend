@@ -1,0 +1,158 @@
+# depslib dependency file v1.0
+1620232848 source:/home/aleksa98stojkovic/Desktop/System_Level_Design/Zadacic iz SystemC-a/main.cpp
+	<iostream>
+	"RandGen.hpp"
+
+1620232871 /home/aleksa98stojkovic/Desktop/System_Level_Design/Zadacic iz SystemC-a/RandGen.hpp
+	<systemc>
+
+1620232938 source:/home/aleksa98stojkovic/Desktop/System_Level_Design/Zadacic iz SystemC-a/RandGen.cpp
+	"RandGen.hpp"
+
+1620677483 source:/home/aleksa98stojkovic/Desktop/System_Level_Design/SystemC_zadacic/RandGen.cpp
+	"RandGen.hpp"
+
+1620677400 /home/aleksa98stojkovic/Desktop/System_Level_Design/SystemC_zadacic/RandGen.hpp
+	<systemc>
+
+1621257004 source:/home/aleksa98stojkovic/Desktop/System_Level_Design/SystemC_zadacic/main.cpp
+	<iostream>
+	"Cache.hpp"
+	"Generator.hpp"
+
+1620236010 /home/aleksa98stojkovic/Desktop/System_Level_Design/SystemC_zadacic/coll.hpp
+	<systemc>
+
+1620677474 source:/home/aleksa98stojkovic/Desktop/System_Level_Design/SystemC_zadacic/coll.cpp
+	"coll.hpp"
+
+1620677147 /home/aleksa98stojkovic/Desktop/System_Level_Design/SystemC_zadacic/system.hpp
+	<systemc>
+	"coll.hpp"
+	"RandGen.hpp"
+
+1620678086 source:/home/aleksa98stojkovic/Desktop/System_Level_Design/SystemC_zadacic/system.cpp
+	"system.hpp"
+
+1620717873 /home/aleksa98stojkovic/Desktop/System_Level_Design/SystemC_zadacic/tb.hpp
+	<systemc>
+	"system.hpp"
+
+1620677727 source:/home/aleksa98stojkovic/Desktop/System_Level_Design/SystemC_zadacic/tb.cpp
+	"tb.hpp"
+
+1620718234 /home/aleksa98stojkovic/Desktop/System_Level_Design/SystemC_zadacic/tb_temp.hpp
+	<systemc>
+	"RandGen.hpp"
+
+1620719469 source:/home/aleksa98stojkovic/Desktop/System_Level_Design/SystemC_zadacic/tb_temp.cpp
+	"tb_temp.hpp"
+
+1621676861 /home/aleksa98stojkovic/Desktop/System_Level_Design/SystemC_zadacic/Cache.hpp
+	<systemc>
+	<tlm>
+	<tlm_utils/simple_target_socket.h>
+	<tlm_utils/simple_initiator_socket.h>
+	"common.hpp"
+	"interfaces.hpp"
+
+1621676849 /home/aleksa98stojkovic/Desktop/System_Level_Design/SystemC_zadacic/common.hpp
+
+1621675957 source:/home/aleksa98stojkovic/Desktop/System_Level_Design/SystemC_zadacic/Cache.cpp
+	"Cache.hpp"
+	<tlm>
+	<string>
+
+1621623403 source:/home/aleksa98stojkovic/Desktop/System_Level_Design/SystemC_zadacic/Generator.cpp
+	"Generator.hpp"
+
+1621612818 /home/aleksa98stojkovic/Desktop/System_Level_Design/SystemC_zadacic/Generator.hpp
+	"common.hpp"
+	<systemc>
+	<tlm>
+	<tlm_utils/simple_initiator_socket.h>
+	"DRAM_data.hpp"
+	"PB.hpp"
+	"Cache.hpp"
+
+1621347267 /home/aleksa98stojkovic/Desktop/System_Level_Design/SystemC_zadacic/interfaces.hpp
+	<systemc>
+	"common.hpp"
+
+1621676138 source:/home/aleksa98stojkovic/Desktop/System_Level_Design/SystemC_zadacic/DRAM_data.cpp
+	"DRAM_data.hpp"
+
+1621676244 /home/aleksa98stojkovic/Desktop/System_Level_Design/SystemC_zadacic/DRAM_data.hpp
+	<systemc>
+	"interfaces.hpp"
+	"common.hpp"
+
+1621676249 /home/aleksa98stojkovic/Desktop/System_Level_Design/SystemC_zadacic/PB.hpp
+	<systemc>
+	"common.hpp"
+	"interfaces.hpp"
+
+1621675446 source:/home/aleksa98stojkovic/Desktop/System_Level_Design/SystemC_zadacic/PB.cpp
+	"PB.hpp"
+
+1621794819 source:/home/boris/Documents/upsampling/RPI_vezbe/SystemC_zadacic/DRAM_data.cpp
+	"DRAM_data.hpp"
+
+1621794819 /home/boris/Documents/upsampling/RPI_vezbe/SystemC_zadacic/DRAM_data.hpp
+	<systemc>
+	"interfaces.hpp"
+	"common.hpp"
+
+1621894710 /home/boris/Documents/upsampling/RPI_vezbe/SystemC_zadacic/interfaces.hpp
+	<systemc>
+	"common.hpp"
+
+1621799746 /home/boris/Documents/upsampling/RPI_vezbe/SystemC_zadacic/common.hpp
+
+1621794819 source:/home/boris/Documents/upsampling/RPI_vezbe/SystemC_zadacic/Generator.cpp
+	"Generator.hpp"
+
+1621794819 /home/boris/Documents/upsampling/RPI_vezbe/SystemC_zadacic/Generator.hpp
+	"common.hpp"
+	<systemc>
+	<tlm>
+	<tlm_utils/simple_initiator_socket.h>
+	"DRAM_data.hpp"
+	"PB.hpp"
+	"Cache.hpp"
+
+1621794819 /home/boris/Documents/upsampling/RPI_vezbe/SystemC_zadacic/PB.hpp
+	<systemc>
+	"common.hpp"
+	"interfaces.hpp"
+
+1621799740 /home/boris/Documents/upsampling/RPI_vezbe/SystemC_zadacic/Cache.hpp
+	<systemc>
+	<tlm>
+	<tlm_utils/simple_target_socket.h>
+	<tlm_utils/simple_initiator_socket.h>
+	"common.hpp"
+	"interfaces.hpp"
+
+1621794819 source:/home/boris/Documents/upsampling/RPI_vezbe/SystemC_zadacic/main.cpp
+	<iostream>
+	"Cache.hpp"
+	"Generator.hpp"
+
+1621794819 source:/home/boris/Documents/upsampling/RPI_vezbe/SystemC_zadacic/PB.cpp
+	"PB.hpp"
+	<string>
+
+1621801469 source:/home/boris/Documents/upsampling/RPI_vezbe/SystemC_zadacic/Cache.cpp
+	"Cache.hpp"
+	<tlm>
+	<string>
+
+1621894795 source:/home/boris/Documents/upsampling/RPI_vezbe/SystemC_zadacic/Weights_mem.cpp
+	"Weights_mem.hpp"
+
+1621894717 /home/boris/Documents/upsampling/RPI_vezbe/SystemC_zadacic/Weights_mem.hpp
+	<systemc>
+	"common.hpp"
+	"interfaces.hpp"
+

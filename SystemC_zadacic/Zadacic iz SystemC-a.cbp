@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Zadacic iz SystemC-a" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/Zadacic iz SystemC-a" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add directory="/home/aleksa98stojkovic/Desktop/System_Level_Design/SystemC_zadacic/" />
+				</Compiler>
+				<Linker>
+					<Add library="systemc" />
+					<Add directory="/home/aleksa98stojkovic/Desktop/System_Level_Design/SystemC_zadacic/" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/Zadacic iz SystemC-a" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add directory="/home/aleksa98stojkovic/Desktop/System_Level_Design/SystemC_zadacic/" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="systemc" />
+					<Add directory="/home/aleksa98stojkovic/Desktop/System_Level_Design/SystemC_zadacic/" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+		</Compiler>
+		<Unit filename="Cache.cpp" />
+		<Unit filename="Cache.hpp" />
+		<Unit filename="DRAM_data.cpp" />
+		<Unit filename="DRAM_data.hpp" />
+		<Unit filename="Generator.cpp" />
+		<Unit filename="Generator.hpp" />
+		<Unit filename="PB.cpp" />
+		<Unit filename="PB.hpp" />
+		<Unit filename="Weights_mem.cpp" />
+		<Unit filename="Weights_mem.hpp" />
+		<Unit filename="common.hpp" />
+		<Unit filename="interfaces.hpp" />
+		<Unit filename="main.cpp" />
+		<Extensions />
+	</Project>
+</CodeBlocks_project_file>
