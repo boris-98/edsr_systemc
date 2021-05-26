@@ -82,14 +82,21 @@ void cache::write()
         DRAM_cache_port->read_DRAM_cache(&stick_data, start_address[i / (CACHE_SIZE / 2)] + cnt * DATA_DEPTH); // 0 - 63; (0, 0) | 64 - 127; (0, 1) | 128 - 255; (0, 2)...
         compress_data_stick(stick_data, cache_mem + i * DATA_DEPTH, compressed_stick_index, compressed_stick_length);
         cache_line_length[i] = compressed_stick_length; // Upisi i duzinu linije kesa u neku memoriju
-        address_hash[i] = (i / (CACHE_SIZE / 2)) * max_y + cnt; // (x, y) = x * max_y + y
+        address_hash[i] = (i / (CACHE_SIZE / 2)) * max_y + cnt; // 0, 1, 2, 3, 4
         if(cnt == 0)
         {
             amount_hash[i] = 2 * W_kn;  // U hardveru petlja 'kn' je u potpunosti ramotana pa ne treba *kn, ovo je samo zbog softverskog modela
         }
         else
         {
-            amount_hash[i] = 3 * W_kn;
+            if(cnt == DATA_WIDTH - 1)
+            {
+                amount_hash[i] = 2 * W_kn;
+            }
+            else
+            {
+                amount_hash[i] = 3 * W_kn;
+            }
         }
 
         cnt = (cnt + 1) % (CACHE_SIZE / 2); // 0, 1, 2, 3, 4, 0, 1, 2, ...

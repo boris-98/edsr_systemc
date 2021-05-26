@@ -10,6 +10,7 @@ WMEM::WMEM(sc_module_name name) : sc_channel(name)
     cout << "WMEM::Konstruisan je WMEM!" << endl;
 
     y_max = DATA_WIDTH;
+
     int cnt = 0;
     for(int kn = 0; kn < W_kn; kn++)
     {

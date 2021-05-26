@@ -14,7 +14,7 @@
 #define MAX_X 0x4
 #define MAX_Y 0x5
 #define CLK_PERIOD 10
-#define INVALID_ADDRESS 9
+#define INVALID_ADDRESS -1
 
 // Dodati jos jedan header sa zajednickim stvarima
 

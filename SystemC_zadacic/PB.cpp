@@ -111,7 +111,7 @@ void PB::conv2D()
     }
 
     cout << endl << endl << endl << endl;
-    cout << "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$" << endl;
+    cout << "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$" << endl << endl;
 
     for(int c = 0; c < W_kn; c++)
     {
@@ -128,6 +128,7 @@ void PB::conv2D()
 
 
     cout << "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$" << endl;
+    cout << endl << endl << endl << endl;
 }
 
 
