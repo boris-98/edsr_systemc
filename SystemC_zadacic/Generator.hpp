@@ -9,6 +9,7 @@
 #include "DRAM_data.hpp"
 #include "PB.hpp"
 #include "Cache.hpp"
+#include "Weights_mem.hpp"
 
 class Generator : public sc_core::sc_module
 {
@@ -26,6 +27,7 @@ class Generator : public sc_core::sc_module
         DRAM_data* dram;
         PB* pb;
         cache* c;
+        WMEM* memory;
         // void Test();
         typedef tlm::tlm_base_protocol_types::tlm_payload_type pl_t;
 };

@@ -30,7 +30,7 @@ class DRAM_cache_if: virtual public sc_core::sc_interface
 class WMEM_cache_if: virtual public sc_core::sc_interface
 {
     public:
-        virtual void write_WMEM_cache(const unsigned char* compressed_stick_address, const unsigned char &compressed_stick_address_length,
+        virtual void write_cache_WMEM(const unsigned char* compressed_stick_address, const unsigned char &compressed_stick_address_length,
                                       const unsigned int &address, const unsigned int &cache_line) = 0;
 };
 

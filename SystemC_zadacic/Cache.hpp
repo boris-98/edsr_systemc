@@ -31,7 +31,7 @@ class cache :
         sc_core::sc_port<DRAM_cache_if> DRAM_cache_port;
 
         /* WMEM <-> Cache interface */
-        // sc_core::sc_port<WMEM_cache_if> WMEM_cache_port; // !!!!!!!!!**************
+        sc_core::sc_port<WMEM_cache_if> WMEM_cache_port;
 
         /* PB <-> Cache interface */
         sc_dt::uint64 stick_address_cache; // Sadrzi konkatenirane x i y indekse za trazeni stapic podataka

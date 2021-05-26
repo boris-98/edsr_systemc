@@ -8,12 +8,15 @@ using namespace sc_dt;
 Generator::Generator(sc_module_name name) : sc_module(name)//, cache_mem("Cache")
 {
     // SC_METHOD(Test);
-    dram = new DRAM_data("DRAM"); // Pravim novi DRAM_data
-    pb = new PB("PB"); // Pravim novi PB
-    c = new cache("Cache");
+    dram = new DRAM_data("DRAM");   // Pravim novi DRAM_data
+    pb = new PB("PB");              // Pravim novi PB
+    c = new cache("Cache");         // Pravim novi Cache
+    memory = new WMEM("Memory");    // Pravim novi WMEM
     c->DRAM_cache_port.bind(*dram);
     pb->pb_cache_port.bind(*c);
     c->cache_pb_port.bind(*pb);
+    c->WMEM_cache_port.bind(*memory);
+    pb->pb_WMEM_port.bind(*memory);
     pb->done_pb_cache.bind(signal_channel);
     c->done_pb_cache.bind(signal_channel);
     gen_soc.bind(c->PROCESS_soc);

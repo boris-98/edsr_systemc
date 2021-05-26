@@ -7,7 +7,8 @@
 
 class WMEM :
     public sc_core::sc_channel,
-    public WMEM_cache_if
+    public WMEM_cache_if,
+    public pb_WMEM_if
 {
     public:
 
@@ -16,7 +17,7 @@ class WMEM :
 
     protected:
 
-        void write_WMEM_cache(const unsigned char* compressed_stick_address, const unsigned char &compressed_stick_address_length,
+        void write_cache_WMEM(const unsigned char* compressed_stick_address, const unsigned char &compressed_stick_address_length,
                               const unsigned int &address, const unsigned int &cache_line);
         void read_pb_WMEM(type** compressed_weights, unsigned char &compressed_index_length, const unsigned int &x, const unsigned int &y,
                           const unsigned int &kn, const unsigned int &kh, const unsigned int &kw);
