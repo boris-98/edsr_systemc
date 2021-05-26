@@ -108,142 +108,146 @@ void cache::write()
         {
             unsigned char full = 0;
 
-                // Proveravamo da li ima slobodnih mesta za upis u kes
-                for(int i = 0; i < CACHE_SIZE; i++)
+            // Proveravamo da li ima slobodnih mesta za upis u kes
+            for(int i = 0; i < CACHE_SIZE; i++)
+            {
+                full += (unsigned char)write_en[i];
+            }
+
+            if(!full)
+            {
+                cout << "Cache::Write ceka na slobodno mesto!" << endl;
+                wait(write_enable); // Ovo treba da se desava samo ako je cache pun
+            }
+
+
+            // Trazi koja je prva slobodna linija
+            unsigned char free_cache_line;
+            for(int i = 0; i < CACHE_SIZE; i++)
+            {
+                if(write_en[i])
                 {
-                    full += (unsigned char)write_en[i];
+                    free_cache_line = i;
+                    break;
                 }
+            }
 
-                if(!full)
-                {
-                    cout << "Cache::Write ceka na slobodno mesto!" << endl;
-                    wait(write_enable); // Ovo treba da se desava samo ako je cache pun
-                }
+            cout << "Cache::Write cita podatak: " << "(" << d << ", " << y_i << ")" << endl;
 
+            DRAM_cache_port->read_DRAM_cache(&stick_data, start_address[d] + y_i * DATA_DEPTH);
+            compress_data_stick(stick_data, cache_mem + free_cache_line * DATA_DEPTH, compressed_stick_index, compressed_stick_length);
+            *(cache_line_length + free_cache_line) = compressed_stick_length; // cache_line_length[free_cache_line] = ...
+            address_hash[free_cache_line] = d * max_y + y_i;
+            write_en[free_cache_line] = false;
 
-                // Trazi koja je prva slobodna linija
-                unsigned char free_cache_line;
-                for(int i = 0; i < CACHE_SIZE; i++)
-                {
-                    if(write_en[i])
+            switch(y_i)
+            {
+                case 0:
+                case Y_LIMIT1:
+                case Y_LIMIT2:
                     {
-                        free_cache_line = i;
-                        break;
+                        amount_hash[free_cache_line] = 2 * W_kn;
                     }
-                }
+                    break;
 
-                cout << "Cache::Write cita podatak: " << "(" << d << ", " << y_i << ")" << endl;
+                default:
+                    {
+                        amount_hash[free_cache_line] = 3 * W_kn;
+                    }
+                    break;
 
-                DRAM_cache_port->read_DRAM_cache(&stick_data, start_address[d] + y_i * DATA_DEPTH);
-                compress_data_stick(stick_data, cache_mem + free_cache_line * DATA_DEPTH, compressed_stick_index, compressed_stick_length);
-                *(cache_line_length + free_cache_line) = compressed_stick_length; // cache_line_length[free_cache_line] = ...
-                address_hash[free_cache_line] = d * max_y + y_i;
-                write_en[free_cache_line] = false;
+            }
 
-                switch(y_i)
-                {
-                    case 0:
-                    case Y_LIMIT1:
-                    case Y_LIMIT2:
-                        {
-                            amount_hash[free_cache_line] = 2 * W_kn;
-                        }
-                        break;
+            // Iscitaj koji stick zeli read da procita
+            unsigned int temp_x = stick_address_cache >> 32;
+            unsigned int temp_y = stick_address_cache & 0x00000000ffffffff;
 
-                    default:
-                        {
-                            amount_hash[free_cache_line] = 3 * W_kn;
-                        }
-                        break;
+            // Ako je upisa stick koji read zeli, onda odblokiraj read
+            if(temp_x * max_y + temp_y == d * max_y + y_i)
+                read_enable.notify();
 
-                }
-
-                // Iscitaj koji stick zeli read da procita
-                unsigned int temp_x = stick_address_cache >> 32;
-                unsigned int temp_y = stick_address_cache & 0x00000000ffffffff;
-
-                // Ako je upisa stick koji read zeli, onda odblokiraj read
-                if(temp_x * max_y + temp_y == d * max_y + y_i)
-                    read_enable.notify();
-
-                WMEM_cache_port->write_cache_WMEM(compressed_stick_index, compressed_stick_length,
-                                                  address_hash[free_cache_line], free_cache_line);   // upisuje potrebne informacije u WMEM
+            cout << "CACHE::adresa koja se salje WMEM-u je: " << to_string(address_hash[free_cache_line]) << endl;
+            WMEM_cache_port->write_cache_WMEM(compressed_stick_index, compressed_stick_length,
+                                              address_hash[free_cache_line], free_cache_line);   // upisuje potrebne informacije u WMEM
         }
     }
 
 
     // Sada normalno
 
-    for(unsigned int x_i = 0; x_i < max_x - 2; x_i++)
+    for(unsigned int x_i = 0; x_i < max_x - 1; x_i++)
     {
         for(unsigned int y_i = 0; y_i < max_y; y_i++)
         {
             for(unsigned int d = 0; d < 3; d++)
             {
 
-                unsigned char full = 0;
-
-                // Proveravamo da li ima slobodnih mesta za upis u kes
-                for(int i = 0; i < CACHE_SIZE; i++)
+                if(!((x_i == max_x - 2) && (d == 2)))
                 {
-                    full += (unsigned char)write_en[i];
-                }
+                    unsigned char full = 0;
 
-                if(!full)
-                {
-                    cout << "Cache::Write ceka na slobodno mesto!" << endl;
-                    wait(write_enable); // Ovo treba da se desava samo ako je cache pun
-                }
-
-
-                // Trazi koja je prva slobodna linija
-                unsigned char free_cache_line;
-                for(int i = 0; i < CACHE_SIZE; i++)
-                {
-                    if(write_en[i])
+                    // Proveravamo da li ima slobodnih mesta za upis u kes
+                    for(int i = 0; i < CACHE_SIZE; i++)
                     {
-                        free_cache_line = i;
-                        break;
+                        full += (unsigned char)write_en[i];
                     }
-                }
 
-                cout << "Cache::Write cita podatak: " << "(" << x_i + d << ", " << y_i << ")" << endl;
+                    if(!full)
+                    {
+                        cout << "Cache::Write ceka na slobodno mesto!" << endl;
+                        wait(write_enable); // Ovo treba da se desava samo ako je cache pun
+                    }
 
-                DRAM_cache_port->read_DRAM_cache(&stick_data, start_address[x_i + d] + y_i * DATA_DEPTH);
-                compress_data_stick(stick_data, cache_mem + free_cache_line * DATA_DEPTH, compressed_stick_index, compressed_stick_length);
-                *(cache_line_length + free_cache_line) = compressed_stick_length; // cache_line_length[free_cache_line] = ...
-                address_hash[free_cache_line] = (x_i + d) * max_y + y_i;
-                write_en[free_cache_line] = false;
 
-                switch(y_i)
-                {
-                    case 0:
-                    case Y_LIMIT1:
-                    case Y_LIMIT2:
+                    // Trazi koja je prva slobodna linija
+                    unsigned char free_cache_line;
+                    for(int i = 0; i < CACHE_SIZE; i++)
+                    {
+                        if(write_en[i])
                         {
-                            amount_hash[free_cache_line] = 2 * W_kn;
+                            free_cache_line = i;
+                            break;
                         }
-                        break;
+                    }
 
-                    default:
-                        {
-                            amount_hash[free_cache_line] = 3 * W_kn;
-                        }
-                        break;
+                    cout << "Cache::Write cita podatak: " << "(" << x_i + d << ", " << y_i << ")" << endl;
 
+                    DRAM_cache_port->read_DRAM_cache(&stick_data, start_address[x_i + d] + y_i * DATA_DEPTH);
+                    compress_data_stick(stick_data, cache_mem + free_cache_line * DATA_DEPTH, compressed_stick_index, compressed_stick_length);
+                    *(cache_line_length + free_cache_line) = compressed_stick_length; // cache_line_length[free_cache_line] = ...
+                    address_hash[free_cache_line] = (x_i + d) * max_y + y_i;
+                    write_en[free_cache_line] = false;
+
+                    switch(y_i)
+                    {
+                        case 0:
+                        case Y_LIMIT1:
+                        case Y_LIMIT2:
+                            {
+                                amount_hash[free_cache_line] = 2 * W_kn;
+                            }
+                            break;
+
+                        default:
+                            {
+                                amount_hash[free_cache_line] = 3 * W_kn;
+                            }
+                            break;
+
+                    }
+
+                    // Iscitaj koji stick zeli read da procita
+                    unsigned int temp_x = stick_address_cache >> 32;
+                    unsigned int temp_y = stick_address_cache & 0x00000000ffffffff;
+
+                    // Ako je upisa stick koji read zeli, onda odblokiraj read
+                    if(temp_x * max_y + temp_y == (x_i + d) * max_y + y_i)
+                        read_enable.notify();
+
+                    cout << "CACHE::adresa koja se salje WMEM-u je: " << to_string(address_hash[free_cache_line]) << endl;
+                    WMEM_cache_port->write_cache_WMEM(compressed_stick_index, compressed_stick_length,
+                                                      address_hash[free_cache_line], free_cache_line);   // upisuje potrebne informacije u WMEM
                 }
-
-                // Iscitaj koji stick zeli read da procita
-                unsigned int temp_x = stick_address_cache >> 32;
-                unsigned int temp_y = stick_address_cache & 0x00000000ffffffff;
-
-                // Ako je upisa stick koji read zeli, onda odblokiraj read
-                if(temp_x * max_y + temp_y == (x_i + d) * max_y + y_i)
-                    read_enable.notify();
-
-                WMEM_cache_port->write_cache_WMEM(compressed_stick_index, compressed_stick_length,
-                                                  address_hash[free_cache_line], free_cache_line);   // upisuje potrebne informacije u WMEM
-
             }
         }
     }

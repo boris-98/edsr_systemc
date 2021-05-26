@@ -63,6 +63,12 @@ void PB::conv2D()
                             address |= (sc_dt::uint64)(x_i) << 32;
                             address |= (sc_dt::uint64)(y_i);
 
+                            pb_WMEM_port->read_pb_WMEM(&weights, w_length, x_i, y_i, kn, kh, kw);   // trazimo odgovarajuce tezine
+
+                            cout << "PB::procitane tezine su: " << endl;
+                            for(int i = 0; i < w_length; i++)
+                                cout << weights[i] << endl;
+
                             pb_cache_port->write_pb_cache(address);     // zahtevamo podatke o ulazu iz kesa
                             cout << "PB::PB ceka na dogadjaj!" << endl;
 
@@ -71,9 +77,9 @@ void PB::conv2D()
                             cout << endl;
                             cout << "PB::Primljeni su podaci iz kesa!" << endl;
 
-                            pb_WMEM_port->read_pb_WMEM(&weights, w_length, x_i, y_i, kn, kh, kw);   // trazimo odgovarajuce tezine
 
-                            cout << "PB::Duzina tezina je: " << w_length << endl;
+
+                            //   cout << "PB::Duzina tezina je: " << w_length << endl;
 
                             for(int kd = 0; kd < w_length; kd++)    // sam proracun
                                 sum += data[kd] * weights[kd];
